@@ -1,5 +1,7 @@
 package com.doc.a;
 
+import java.io.File;
+
 public class Common {
 	public static final String Directory="Directory";
 	public static final String File="File";
@@ -33,5 +35,6 @@ public class Common {
 	public static final String type0="0";//操作失败
 	public static final String type1="1";//操作成功
 	public static final String type2="2";//文件重复
+	
 }
 

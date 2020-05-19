@@ -37,7 +37,15 @@ public class query extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		
+		//////////////////////////////磁盘 PANEL//////////////////////////////////////////	
+		StringBuffer sb=new StringBuffer();
+		File[] files = File.listRoots();
+		for (File file : files) {
+		String path = file.getPath();
+		sb.append("<option value=\""+path+"\">"+path+"</option>");
+		}
+		response.setCharacterEncoding("utf-8");
+		response.getWriter().append(sb.toString());			
 	}
 
 	/**

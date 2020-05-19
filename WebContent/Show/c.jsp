@@ -7,7 +7,7 @@
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <title>layout 后台大布局 - Layui</title>
+  <title>文件查阅平台</title>
   <link rel="stylesheet" href="<%=basePath%>Static/css/layui.css">
   <link rel="stylesheet" href="<%=basePath%>Static/css/layer.css">
   <script src="<%=basePath%>Static/js/jquery-3.4.1.min.js"></script>
@@ -31,7 +31,17 @@
       <li class="layui-nav-item"><input placeholder="请输入搜索内容..."  id="pageRoot2"></li> -->
       <!-- <li class="layui-nav-item"><a href=""></a></li> -->
       <li class="layui-nav-item"><a onclick="page()" href="javascript:;">磁盘目录查询</a></li>
-      <li class="layui-nav-item"><input placeholder="路径_例 c:/" value="c:/" id="pageUrl"></li>
+      <li class="layui-nav-item">
+      <select  id="pageUrl">
+      	<!-- <option value="c:/">c</option>
+      	<option value="d:/">d</option>
+      	<option value="e:/">e</option>
+      	<option value="f:/">f</option>
+      	<option value="g:/">g</option>
+      	<option value="h:/">h</option>
+      	<option value="i:/">i</option> -->
+      </select>
+      <!-- <input placeholder="路径_例 c:/" value="c:/" id="pageUrl"></li> -->
      <!--  <li class="layui-nav-item">
         <a href="javascript:;">文档查找</a>
         <dl class="layui-nav-child">
@@ -153,6 +163,7 @@ layui.use('element', function(){
 <script type="text/javascript">
 $(document).ready(function(){
 	pageBegin();//左侧菜单
+	queryCP();//查询盘符
 });
 var sp=null;
 var fileUploadPath="";
@@ -215,6 +226,21 @@ function page(url){
          }
 	});
 }
+//盘符
+function queryCP(){
+	 $.ajax({
+        url:"<%=basePath%>/query",
+        type:"GET",
+        //data:{ url: url},
+        contentType :"application/x-www-form-urlencoded; charset=utf-8",
+        success:function(data){
+ 			$("#pageUrl").html(data);
+        }
+	});
+
+	setTab(url);
+}
+
 //right panel
 function query(url){
 	 fileUploadPath=url;
@@ -328,8 +354,8 @@ function queryload(url){
 	if(judgeImg(url)){
 		layer.open({
 		    type: 1 //此处以iframe举例
-		    ,title: '当你选择该窗体时，即会在最顶端'
-		    ,area: ['390px', '260px']
+		    ,title: '图片浏览'
+		    ,area: ['500px', '400px']
 		    ,shade: 0
 		    ,maxmin: true
 		    ,offset: [ //为了演示，随机坐标
@@ -337,11 +363,11 @@ function queryload(url){
 		      ,($(window).width()/2)
 		    ] 
 		    ,content: "<img id=\"npcImg\" width=\"100%\" height=\"100%\"/>  "
-		    ,btn: ['继续弹出', '全部关闭'] //只是为了演示
+		    ,btn: ['全部关闭'] //只是为了演示
 		    ,yes: function(){
-		      $(that).click(); 
+		   /*    $(that).click(); 
 		    }
-		    ,btn2: function(){
+		    ,btn2: function(){ */
 		      layer.closeAll();
 		    }
 		    ,zIndex: layer.zIndex //重点1
@@ -355,8 +381,8 @@ function queryload(url){
 	if(!judgeImg(url)){
 		 layer.open({
 			    type: 2 //此处以iframe举例
-			    ,title: '当你选择该窗体时，即会在最顶端'
-			    ,area: ['390px', '260px']
+			    ,title: '文档内容'
+			    ,area: ['500px', '400px']
 			    ,shade: 0
 			    ,maxmin: true
 			    ,offset: [ //为了演示，随机坐标
@@ -364,11 +390,11 @@ function queryload(url){
 			      ,($(window).width()/2)
 			    ] 
 			    ,content: '<%=basePath%>/show?url='+url
-			    ,btn: ['继续弹出', '全部关闭'] //只是为了演示
+			    ,btn: ['全部关闭'] //只是为了演示
 			    ,yes: function(){
-			      $(that).click(); 
+			     /*  $(that).click(); 
 			    }
-			    ,btn2: function(){
+			    ,btn2: function(){ */
 			      layer.closeAll();
 			    }
 			    ,zIndex: layer.zIndex //重点1
