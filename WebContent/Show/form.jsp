@@ -6,6 +6,10 @@
 <title>Insert title here</title>
 </head>
 <body>
-<div>${content}</div>
+<div>
+<xmp>
+${content}
+</xmp>
+</div>
 </body>
 </html>

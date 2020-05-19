@@ -55,9 +55,7 @@ public class show extends HttpServlet {
 			if(file.exists()){  
 				String suffix = file.getName().substring(file.getName().lastIndexOf(".")+1);
 				suffix=suffix.toLowerCase();
-				//System.out.println(suffix);
 				//视频文件排除
-//				String ext[]={"mp4","rmvb","mp3","avi","exe","rar"};
 				String ext=DomReader.domReader("exclude");
 				if(ext.indexOf(suffix)!=-1){
 					request.setAttribute("content", fileContent);  
@@ -81,18 +79,7 @@ public class show extends HttpServlet {
 			    //JAVA反编译
 			    else if(suffix.equals("class")){
 			    	String temp=DecompilerUtils.decompile(url);
-			    	ByteArrayInputStream in = new ByteArrayInputStream(temp.getBytes());
-			    	BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(in));
-			    	while(true){
-			    		temp=bufferedReader.readLine();
-			    		if(temp==null){break;}
-			    		if(temp.indexOf("{")!=-1||temp.indexOf("}")!=-1){
-			    			fileContent.append(temp+"</br>");
-			    		}else{
-				    		fileContent.append("&nbsp;&nbsp;");	
-				    		fileContent.append(temp+"</br>");
-			    		}
-			    	}
+			    	fileContent.append(temp);
 			    }
 			    //XML文件
 			    else if(suffix.equals("xml")){
@@ -111,8 +98,7 @@ public class show extends HttpServlet {
 			        //每从BufferedReader对象中读取一行字符。  
 			        String line = null;  
 			        while((line=bufferReader.readLine()) !=null){  
-			        	fileContent.append("</br>");
-			            fileContent.append(line);  
+			            fileContent.append(line+"\n");  
 			        }
 			        bufferReader.close();  
 			    }
@@ -122,8 +108,7 @@ public class show extends HttpServlet {
 			        //每从BufferedReader对象中读取一行字符。  
 			        String line = null;  
 			        while((line=bufferReader.readLine()) !=null){  
-			        	//fileContent.append("</br>");
-			            fileContent.append(line);  
+			            fileContent.append(line+"\n");  
 			        }
 			        bufferReader.close();  
 			    }
@@ -170,7 +155,7 @@ public class show extends HttpServlet {
 				e.printStackTrace();
 			}
 		}
-		System.out.println(sb);
+		//System.out.println(sb);
 		return sb;
 	}
 }
