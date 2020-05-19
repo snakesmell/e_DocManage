@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doc>
+	<root>C:\</root><!-- 文档根目录 -->
+	<lucenceStart>close</lucenceStart><!-- start启用Lucence,close关闭Lucence -->
+	<lucence>d://lucence</lucence><!-- 索引文件存放路径 -->
+	<fileUploadTemp>d://tmp</fileUploadTemp><!-- 文件上传临时路径 -->
+	<password>admin123</password><!-- 平台登录密码 -->
+	<lucenceSleep>30000000</lucenceSleep><!-- 索引更新时间 -->
+	<lucenceReturnSize>100</lucenceReturnSize><!-- 查询返回数量 -->
+	
+</doc>
