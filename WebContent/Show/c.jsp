@@ -157,7 +157,7 @@ $(document).ready(function(){
 var sp=null;
 var fileUploadPath="";
 //索引更新时间
-setInterval(function(){$("#lucenceUpdate").html("<%=request.getServletContext().getAttribute(Common.application)%>");},3000);
+<%-- setInterval(function(){$("#lucenceUpdate").html("<%=request.getServletContext().getAttribute(Common.application)%>");},3000); --%>
 //left root panel
 function pageBegin(){
 	 $.ajax({

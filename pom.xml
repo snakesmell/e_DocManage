@@ -88,7 +88,29 @@
     <artifactId>dom4j</artifactId>
     <version>1.6.1</version>
 </dependency>
+	<!-- JAVA反编译 -->
+	 <dependency>
+      <groupId>org.bitbucket.mstrobel</groupId>
+      <artifactId>procyon-core</artifactId>
+      <version>0.5.35</version>
+    </dependency>
+    <dependency>
+      <groupId>org.bitbucket.mstrobel</groupId>
+      <artifactId>procyon-expressions</artifactId>
+      <version>0.5.35</version>
+    </dependency>
+    <dependency>
+      <groupId>org.bitbucket.mstrobel</groupId>
+      <artifactId>procyon-reflection</artifactId>
+      <version>0.5.35</version>
+    </dependency>
+    <dependency>
+      <groupId>org.bitbucket.mstrobel</groupId>
+      <artifactId>procyon-compilertools</artifactId>
+      <version>0.5.35</version>
+    </dependency>
 	
+	<!-- JAVA反编译 -->
   </dependencies>
   <build>
     <sourceDirectory>src</sourceDirectory>

@@ -1,6 +1,8 @@
 package com.doc.b;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileReader;
@@ -17,10 +19,11 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.poi.POIXMLDocument;
 import org.apache.poi.POIXMLTextExtractor;
 import org.apache.poi.hwpf.extractor.WordExtractor;
-import org.apache.poi.openxml4j.exceptions.OpenXML4JException;
 import org.apache.poi.openxml4j.opc.OPCPackage;
 import org.apache.poi.xwpf.extractor.XWPFWordExtractor;
-import org.apache.xmlbeans.XmlException;
+
+import com.doc.fileReader.DecompilerUtils;
+import com.doc.fileReader.DomReader;
 
 /**
  * Servlet implementation class show
@@ -50,8 +53,17 @@ public class show extends HttpServlet {
 			fileContent = new StringBuffer();  
 			File file = new File(url);  
 			if(file.exists()){  
-				String suffix = file.getName().substring(file.getName().lastIndexOf(".")+1);  
-				System.out.println(suffix);
+				String suffix = file.getName().substring(file.getName().lastIndexOf(".")+1);
+				suffix=suffix.toLowerCase();
+				//System.out.println(suffix);
+				//视频文件排除
+//				String ext[]={"mp4","rmvb","mp3","avi","exe","rar"};
+				String ext=DomReader.domReader("exclude");
+				if(ext.indexOf(suffix)!=-1){
+					request.setAttribute("content", fileContent);  
+					request.getRequestDispatcher("/Show/form.jsp").forward(request, response);
+					return;
+				}
 			    //Word2003  
 			    if (suffix.equals("doc")) {  
 			        FileInputStream fis = new FileInputStream(file);  
@@ -65,20 +77,60 @@ public class show extends HttpServlet {
 			        POIXMLTextExtractor extractor = new XWPFWordExtractor(opcPackage);  
 			        String text = extractor.getText();  
 			        fileContent.append(text);  
-			    }else{
-			    //TXT  
+			    }
+			    //JAVA反编译
+			    else if(suffix.equals("class")){
+			    	String temp=DecompilerUtils.decompile(url);
+			    	ByteArrayInputStream in = new ByteArrayInputStream(temp.getBytes());
+			    	BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(in));
+			    	while(true){
+			    		temp=bufferedReader.readLine();
+			    		if(temp==null){break;}
+			    		if(temp.indexOf("{")!=-1||temp.indexOf("}")!=-1){
+			    			fileContent.append(temp+"</br>");
+			    		}else{
+				    		fileContent.append("&nbsp;&nbsp;");	
+				    		fileContent.append(temp+"</br>");
+			    		}
+			    	}
+			    }
+			    //XML文件
+			    else if(suffix.equals("xml")){
+			        BufferedReader bufferReader = new BufferedReader(new InputStreamReader(new FileInputStream(file),"utf-8"));  
+			        String line = null;  
+			        fileContent.append("<xmp>");
+			        while((line=bufferReader.readLine()) !=null){  
+			            fileContent.append(line+"\n");  
+			        }
+			        fileContent.append("</xmp>");
+			        bufferReader.close();  
+			    }
+			    //记事本
+			    else if(suffix.equals("txt")){
+			        BufferedReader bufferReader = new BufferedReader(new InputStreamReader(new FileInputStream(file),"UTF-8"));  
+			        //每从BufferedReader对象中读取一行字符。  
+			        String line = null;  
+			        while((line=bufferReader.readLine()) !=null){  
+			        	fileContent.append("</br>");
+			            fileContent.append(line);  
+			        }
+			        bufferReader.close();  
+			    }
+			    //其它
+			    else{
 			        BufferedReader bufferReader = new BufferedReader(new InputStreamReader(new FileInputStream(file),"utf-8"));  
 			        //每从BufferedReader对象中读取一行字符。  
 			        String line = null;  
 			        while((line=bufferReader.readLine()) !=null){  
-			        	fileContent.append("<br>");
+			        	//fileContent.append("</br>");
 			            fileContent.append(line);  
-			        }  
+			        }
 			        bufferReader.close();  
-			        //输出  
-				    request.setAttribute("content", fileContent);  
-				    request.getRequestDispatcher("/Show/form.jsp").forward(request, response);
 			    }
+			    //System.out.println(fileContent);
+			    //输出  
+			    request.setAttribute("content", fileContent);  
+			    request.getRequestDispatcher("/Show/form.jsp").forward(request, response);
 			}else{  
 			    System.out.println("文件不存在！");  
 			}

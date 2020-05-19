@@ -1,22 +1,19 @@
 package com.doc.fileReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileReader;
+import java.io.InputStream;
+import java.util.Iterator;
+
 import org.dom4j.Document;
-import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
-
-import com.doc.a.Common;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 public class DomReader {
-	public static void main(String[] args) {
-		domReader(Common.xmlRoot);
-		domReader(Common.xmlLucence);
-		domReader(Common.xmlPassword);
-	}
+//	public static void main(String[] args) {
+//		domReader(Common.xmlRoot);
+//		domReader(Common.xmlLucence);
+//		domReader(Common.xmlPassword);
+//	}
 	
 	public static String domReader(String node) {
 		try {
@@ -56,5 +53,33 @@ public class DomReader {
 			return null;
 		}
 	}
-	
+	//读取dom文件内容
+	public static String readDomFile(File file) {
+		try {
+			//创建DOM4的解析器
+			SAXReader saxReader = new SAXReader();
+			InputStream resourceAsStream = new FileInputStream(file);
+			//DOM4j的dom树
+			Document read = saxReader.read(resourceAsStream);
+			//获取根节点
+			Element rootElement = read.getRootElement();
+//			System.out.println(rootElement.getStringValue());
+			Iterator<org.dom4j.Element> iterator = rootElement.elementIterator();
+			StringBuilder sb=new StringBuilder();
+			sb.append("<"+rootElement.getName()+">\n");
+			while (iterator.hasNext()){
+			    Element children = iterator.next();
+			    sb.append("<"+children.getName()+">");
+			    sb.append(children.getStringValue());
+			    sb.append("</"+children.getName()+">\n");
+			}
+			sb.append("</"+rootElement.getName()+">");
+			System.out.println(sb.toString());
+			return sb.toString();
+			//System.out.println(sb.toString());
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "";
+		}
+	}
 }

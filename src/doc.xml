@@ -7,5 +7,5 @@
 	<password>admin123</password><!-- 平台登录密码 -->
 	<lucenceSleep>30000000</lucenceSleep><!-- 索引更新时间 -->
 	<lucenceReturnSize>100</lucenceReturnSize><!-- 查询返回数量 -->
-	
+	<exclude>mp4,rmvb,mp3,avi,exe,rar,zip</exclude>
 </doc>
