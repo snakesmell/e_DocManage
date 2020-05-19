@@ -111,6 +111,12 @@
     </dependency>
 	
 	<!-- JAVA反编译 -->
+	<!-- Excel操作 -->
+	<dependency>
+	    <groupId>org.jxls</groupId>
+	    <artifactId>jxls-jexcel</artifactId>
+	    <version>1.0.6</version>
+	</dependency>
   </dependencies>
   <build>
     <sourceDirectory>src</sourceDirectory>

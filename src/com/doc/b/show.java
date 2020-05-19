@@ -1,12 +1,11 @@
 package com.doc.b;
 
 import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 
@@ -24,6 +23,11 @@ import org.apache.poi.xwpf.extractor.XWPFWordExtractor;
 
 import com.doc.fileReader.DecompilerUtils;
 import com.doc.fileReader.DomReader;
+
+import jxl.Cell;
+import jxl.Sheet;
+import jxl.Workbook;
+import jxl.read.biff.BiffException;
 
 /**
  * Servlet implementation class show
@@ -158,4 +162,31 @@ public class show extends HttpServlet {
 		//System.out.println(sb);
 		return sb;
 	}
+	
+	public static void main(String[] args) {
+		 try{
+	            jxl.Workbook wb =null;
+	            InputStream is = new FileInputStream("D:\\1.华高工作整理\\5.其他文件\\3.落户资料\\人才引进2018版\\附件4：青岛市引进人才基本情况信息表.xls");
+	            wb = Workbook.getWorkbook(is);
+
+	            int sheetSize = wb.getNumberOfSheets();
+	            Sheet sheet = wb.getSheet(0);
+	            int row_total = sheet.getRows();
+	            for (int j = 0; j < row_total; j++) {
+	                if(j == 0){
+	                    Cell[] cells = sheet.getRow(j);
+	                    for (Cell cell : cells) {
+							System.out.print(cell.getContents()+" ");
+						}
+	                    System.out.println();
+	                }
+	            }
+	        }catch (IOException e) {
+	            // TODO Auto-generated catch block
+	            e.printStackTrace();
+	        } catch (BiffException e){
+	            e.printStackTrace();
+	        }
+	}
+	
 }
