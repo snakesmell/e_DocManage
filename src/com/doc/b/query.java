@@ -53,7 +53,9 @@ public class query extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		String url=request.getParameter("url")+"/";
+		String url=request.getParameter("url");
+		url=url.replace("//", "/");
+		url+="/";
 		System.out.println(url);
 		Map<String, List<File>> map = MineUtil.listDirectoryView(new File(url));
 		List<File> dir = map.get(Common.Directory);

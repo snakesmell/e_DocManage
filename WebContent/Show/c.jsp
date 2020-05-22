@@ -51,6 +51,8 @@
       </li> -->
     </ul> 
     <ul class="layui-nav layui-layout-right">
+    <li class="layui-nav-item">
+    </li>
      <!-- 暂时用不到20200418  
      <li class="layui-nav-item">
         <a href="javascript:;">
@@ -115,10 +117,10 @@
   <div class="layui-footer" >
  
   <input type="file" id="excel">
-  <button onclick="uploadCheck()">上传文件</button>
+  <button onclick="uploadCheck()" >上传文件</button>
   &nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;
   <input type="text" id="mkdir" placeholder="输入文件夹名称...">
-  <button onclick="fileOper('create')">创建文件夹</button>
+  <button onclick="fileOper('create')" >创建文件夹</button>
 
   <a style="float: right;" id="lucenceUpdate"  href="javascript:;"></a>
   <!--  <div class="layui-row">
@@ -169,6 +171,10 @@ var sp=null;
 var fileUploadPath="";
 //索引更新时间
 <%-- setInterval(function(){$("#lucenceUpdate").html("<%=request.getServletContext().getAttribute(Common.application)%>");},3000); --%>
+function changcolor(lab){
+	$(".leftA").css("background-color","#1E90FF");
+	$(lab).css("background-color","	#6495ED");
+}
 //left root panel
 function pageBegin(){
 	 $.ajax({
@@ -238,11 +244,11 @@ function queryCP(){
         }
 	});
 
-	setTab(url);
+	//setTab(url);
 }
 
 //right panel
-function query(url){
+function query(url,name){
 	 fileUploadPath=url;
 	 $.ajax({
          url:"<%=basePath%>/query",
@@ -261,7 +267,7 @@ function setTab(url){
 	var tab="<span class=\"layui-badge-dot layui-bg-blue\"></span>";
 	sp=url.split("/");
 	//console.log(sp);
-	for(var i=2;i<sp.length;i++){
+	for(var i=1;i<sp.length;i++){
 		if(i==sp.length-1){
 			tab+="<a style=\"font-size: 16px;\" onclick='getTab("+i+")' href='javascript:;'>"+sp[i]+"</a>"
 		}else{

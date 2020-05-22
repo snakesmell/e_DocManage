@@ -40,7 +40,7 @@ public class page extends HttpServlet {
 		// TODO Auto-generated method stub
 		StringBuilder html=new StringBuilder();
 		try {
-			String path=DomReader.domReader(Common.xmlRoot)+"/";
+			String path=DomReader.domReader(Common.xmlRoot);//+"/"
 			path=path.replaceAll("\\\\","/");
 			//System.out.println(path);
 			File file = new File(path);
@@ -48,7 +48,7 @@ public class page extends HttpServlet {
 			for (File file2 : list) {
 				if(file2.isDirectory()){//判断是否是文件夹	 onclick=query(\""+path+file2.getName()+"\")
 //					System.out.println(file2.getName());		onclick=\"query('"+path+file2.getName()+"')\"
-					html.append(" <li onclick=\"query('"+path+file2.getName()+"')\" class=\"layui-nav-item\"><a href=\"javascript:;\">"+file2.getName()+"</a></li>");
+					html.append(" <li  onclick=\"query('"+path+file2.getName()+"');changcolor(this)\" class=\"leftA layui-nav-item\"><a  href=\"javascript:;\">"+file2.getName()+"</a></li>");
 				}					  
 			}
 			//new Thread(new LucenceThread(path,request)).start();
@@ -74,7 +74,7 @@ public class page extends HttpServlet {
 			for (File file2 : list) {
 				if(file2.isDirectory()){//判断是否是文件夹	 onclick=query(\""+path+file2.getName()+"\")
 //					System.out.println(file2.getName());		onclick=\"query('"+path+file2.getName()+"')\"
-					html.append(" <li onclick=\"query('"+path+file2.getName()+"')\" class=\"layui-nav-item\"><a href=\"javascript:;\">"+file2.getName()+"</a></li>");
+					html.append(" <li onclick=\"query('"+path+file2.getName()+"');changcolor(this)\" class=\"leftA layui-nav-item\"><a href=\"javascript:;\">"+file2.getName()+"</a></li>");
 				}					  
 			}
 			//new Thread(new LucenceThread(path,request)).start();
